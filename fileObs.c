@@ -7,7 +7,7 @@
 * Last Modified: Tue 21 Jun 2016 11:11:25 AM PDT
 * Created By: Jacob Shanklin
 *******************************************/
-
+#include <sys/inotify.h>
 
 int main(int argc, char *argv[])
 {
