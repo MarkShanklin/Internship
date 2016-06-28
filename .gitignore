@@ -30,6 +30,9 @@
 *.hex
 *.prog
 
+# Test Files
+test
+Test
 # Debug files
 *.dSYM/
 *.su
