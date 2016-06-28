@@ -6,6 +6,7 @@
 * by the Free Software Foundation, either version 3 or (at your option)   *
 * any later version. This program is distributed without any warranty.    *
 * See the files COPYING.lgpl-v3 and COPYING.gpl-v3 for details.           *
+*   THIS IS A TEST                                                        *
 \*************************************************************************/
 
 /* Listing 3-3 */
