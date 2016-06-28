@@ -29,6 +29,9 @@
 *.x86_64
 *.hex
 
+# Test Files
+test
+Test
 # Debug files
 *.dSYM/
 *.su
