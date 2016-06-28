@@ -4,7 +4,7 @@
 *          watch a directory and send a
 *          message to a (pipe?)
 * Creation Date: 06-21-2016
-* Last Modified: Wed 22 Jun 2016 11:36:48 AM PDT
+* Last Modified: Mon 27 Jun 2016 02:23:22 PM PDT
 * Created By: Jacob Shanklin
 *******************************************/
 #include <sys/inotify.h>
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
         if (wd == -1)
             errExit("inotify_add_watch");
 
-        printf("Watching %s using wd 5d\n", argv[j], wd);
+        printf("Watching %s using wd %5d\n", argv[j], wd);
     }
 
     for(;;) {
