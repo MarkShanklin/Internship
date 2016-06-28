@@ -9,6 +9,7 @@
 *******************************************/
 #include <sys/inotify.h>
 #include <limits.h>
+#include "fileObs.h"
 static void
 displayInotifyEvent(struct inotify_event *i)
 {
