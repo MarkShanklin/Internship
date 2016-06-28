@@ -29,8 +29,8 @@ displayInotifyEvent(struct inotify_event *i)
     if (i->mask & IN_ISDIR)             printf("IN_ISDIR ");
     if (i->mask & IN_MODIFY)            printf("IN_MODIFY ");
     if (i->mask & IN_MOVE_SELF)         printf("IN_MOVE_SELF ");
-    if (i->mask & IN_MOVE_FROM)         printf("IN_MOVE_FROM ");
-    if (i->mask & IN_MOVE_TO)           printf("IN_MOVE_TO ");
+    if (i->mask & IN_MOVED_FROM)         printf("IN_MOVED_FROM ");
+    if (i->mask & IN_MOVED_TO)           printf("IN_MOVED_TO ");
     if (i->mask & IN_OPEN)              printf("IN_OPEN ");
     if (i->mask & IN_Q_OVERFLOW)        printf("IN_Q_OVERFLOW ");
     if (i->mask & IN_UNMOUNT)           printf("IN_UNMOUNT ");
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     char *p;
     struct inotify_event *event;
 
-    if (argc < 2 || strcmp(argv[1], "--help" == 0))
+    if (argc < 2 || strcmp(argv[1], "--help") == 0)
             usageErr("%s pathname...\n", argv[0]);
 
     inotifyFd = inotify_init();
