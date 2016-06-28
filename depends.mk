@@ -1,0 +1,1 @@
+fileObs.o: fileObs.c

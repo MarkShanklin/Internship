@@ -1,7 +1,12 @@
-#Created By: Mark Shanklin
-#My Generic Makefile
+############################################################
+# File Name     : Makefile
+# Purpose       : Compiles the code using gcc.
+# Creation Date : 06-27-2016
+# Last Modified : Mon 27 Jun 2016 02:34:56 PM PDT
+# Created By    : Mark Shanklin 
+###########################################################
 
-CC = gcc -g
+C = gcc -g
 CFLAGS = -Wall 
 PROG = Internship
 SOURCES := $(shell echo *.c)
