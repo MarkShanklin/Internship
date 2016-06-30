@@ -1,18 +1,11 @@
 /***********************************************************
 * File Name     : Submission.c
-* Purpose       :
+* Purpose       : Submission system for the Grading Environment
 * Creation Date : 06-30-2016
 * Last Modified : Thu 30 Jun 2016 02:11:46 PM PDT
 * Created By    : Mark Shanklin 
 ***********************************************************/
 
-/***********************************************************
- * File Name     : submissions.c
- * Purpose       : A program used to handle submission to the grading environment
- * Creation Date : 06-21-2016
- * Last Modified : Tue 21 Jun 2016 11:10:02 AM PDT
- * Created By    : Mark Shanklin
- ***********************************************************/
 #include <stdio>
 #include <unistd>
 #include <stdlib>
@@ -23,7 +16,13 @@ int main (int argc, int * argv[])
     int c;
     c = 0;
     
-    while(c = getops(argc,argv, "c:C:s:S:l:L:hH"))
+    char *Class;
+    char *Section;
+    char *Lab;
+    char *User;
+    char *FileName;
+    
+    while(c = getops(argc,argv, "c:C:s:S:l:L:u:U:hH"))
     {
         
         switch(c)
@@ -40,14 +39,17 @@ int main (int argc, int * argv[])
                 break;
             case L:
                 break;
+            case u:
+                break;
+            case U:
+                break;
             case h:
                 break;
             case H:
                 break;
         }
     }
+    
     return (EXIT_SUCCESS);
+    
 }
-
-
-
