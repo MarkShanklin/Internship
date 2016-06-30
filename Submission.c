@@ -28,6 +28,7 @@ int main (int argc, int * argv[])
         switch(c)
         {
             case c:
+                Class = strdup(optind);
                 break;
             case C:
                 break;
@@ -49,6 +50,8 @@ int main (int argc, int * argv[])
                 break;
         }
     }
+    
+    printf("%s\n", Class);
     
     return (EXIT_SUCCESS);
     
