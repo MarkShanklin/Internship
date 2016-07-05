@@ -13,45 +13,64 @@
 
 int main (int argc, int * argv[])
 {
-    int c;
-    c = 0;
+    int command = 0;
+    int fileCount = 0;
+    int i = 0;
     
     char *Class;
     char *Section;
     char *Lab;
     char *User;
-    char *FileName;
+    char **FileName;
     
-    while(c = getops(argc,argv, "c:C:s:S:l:L:u:U:hH"))
+    FileName = NULL;
+    
+    while((command = getops(argc,argv, "c:C:s:S:l:L:u:U:hH")) != -1)
     {
         
-        switch(c)
+        switch(command)
         {
-            case c:
-                Class = strdup(optind);
+            case 'c':
+            case 'C':
+                optind--;
+                for (i = optind; i < argc && (*argv[i] != '-'); i++)
+                {
+                    if (strlen(basename(argv[i])) < MAX_FILE_NAME_LEN)
+                    {
+                        Class = strdup(argv[i]);
+                    }
+                }
                 break;
-            case C:
+            case 's':
+            case 'S':
+                
                 break;
-            case s:
+            case 'l':
+            case 'L':
+                
                 break;
-            case S:
+            case 'u':
+            case 'U':
+                
                 break;
-            case l:
+            case 'h':
+            case 'H':
+                
                 break;
-            case L:
+            case '?':
                 break;
-            case u:
-                break;
-            case U:
-                break;
-            case h:
-                break;
-            case H:
+            default:
                 break;
         }
     }
     
     printf("%s\n", Class);
+    
+    
+    for (i = 0; i < fileCount; i++)
+    {
+        fprintf(stdout, "%s\n", FileName[i]);
+    }
     
     return (EXIT_SUCCESS);
     
