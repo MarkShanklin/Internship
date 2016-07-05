@@ -6,10 +6,10 @@
 * Created By    : Mark Shanklin 
 ***********************************************************/
 
-#include <stdio>
-#include <unistd>
-#include <stdlib>
-#include <ctype>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <ctype.h>
 
 int main (int argc, int * argv[])
 {
