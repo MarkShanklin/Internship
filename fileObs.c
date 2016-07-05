@@ -15,7 +15,8 @@ displayInotifyEvent(struct inotify_event *i)
 {
     if (i->mask & IN_MOVED_TO && i->len > 0)
     {
-        int sock;
+        int sockfd;
+        sockfd = socket(AF_UNIX, SOCK_DGRAM, 0);
         //open a UDP Socket on sock
         fprintf(sock, "%s", i->name); //print the filename to the UDP Sock
         //close UDP Socket

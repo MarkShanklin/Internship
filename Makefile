@@ -6,7 +6,7 @@
 # Created By    : Mark Shanklin 
 ###########################################################
 
-C = gcc -g
+C = gcc —std=‘c1x’ g
 CFLAGS = -Wall 
 PROG = Internship.prog
 SOURCES := $(shell echo *.c)
