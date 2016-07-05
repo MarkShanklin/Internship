@@ -17,9 +17,11 @@ displayInotifyEvent(struct inotify_event *i)
     {
         int sockfd;
         sockfd = socket(AF_UNIX, SOCK_DGRAM, 0);
-        //open a UDP Socket on sock
-        fprintf(sock, "%s", i->name); //print the filename to the UDP Sock
-        //close UDP Socket
+        if(sockfd != -1)
+        {
+            fprintf(sockfd, "%s", i->name); //print the filename to the UDP Sock
+            //close UDP Socket
+        }
     }
 
 
