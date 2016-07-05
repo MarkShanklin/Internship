@@ -2,30 +2,48 @@
 # File Name     : Makefile
 # Purpose       : Compiles the code using gcc.
 # Creation Date : 06-27-2016
-# Last Modified : Tue 28 Jun 2016 02:57:18 PM PDT
+# Last Modified : Tue 05 Jul 2016 12:34:42 PM PDT
 # Created By    : Mark Shanklin 
 ###########################################################
 
 C = gcc —std=‘c1x’ g
 CFLAGS = -Wall 
-PROG = Internship.prog
-SOURCES := $(shell echo *.c)
+PROG1 = FileObserver.prog
+PROG2 = Submission.prog
+#PROG3 = Listener.prog
+
+SOURCES1 = fileObs.c
+SOURCES2 = Submission.c
+#SOURCES3 = Listener.c
+
 DEPS := $(shell echo *.h)
-OBJECTS = $(SOURCES:.c=.o)
+	
+OBJECTS1 = $(SOURCES1:.c=.o)
+OBJECTS2 = $(SOURCES2:.c=.o)
+#OBJECTS3 = $(SOURCES3:.c=.o)
+
 DEPENDS = depends.mk
 $(shell touch ${DEPENDS})
 
-all: depends $(PROG)
+all: depends $(PROG1) $(PROG2) $(PROG3)
 
-$(PROG): $(OBJECTS)
+$(PROG1): $(OBJECTS1)
 	$(CC) $(CFLAGS) -o $@ $^
+
+$(PROG2): $(OBJECTS2)
+	$(CC) $(CFLAGS) -o $@ $^
+
+#$(PROG3): $(OBJECTS3)
+#	$(CC) $(CFLAGS) -o $@ $^
 
 .PHONY: clean
 
 clean:
-	rm -f $(PROG) *.o $(DEPENDS)
+	rm -f $(PROG1) $(PROG2) *.o $(DEPENDS)
 
 include $(DEPENDS)
 
 depends:
-	gcc -MM $(SOURCES) > $(DEPENDS)
+	gcc -MM $(SOURCES1) > $(DEPENDS)
+	gcc -MM $(SOURCES2) > $(DEPENDS)
+#	gcc -MM $(SOURCES3) > $(DEPENDS)
