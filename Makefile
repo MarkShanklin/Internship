@@ -6,8 +6,8 @@
 # Created By    : Mark Shanklin 
 ###########################################################
 
-C = gcc —std=‘c1x’ g
-CFLAGS = -Wall 
+CC = gcc
+CFLAGS = -g -Wall -std='gnu11' 
 PROG1 = FileObserver.prog
 PROG2 = Submission.prog
 #PROG3 = Listener.prog
@@ -44,6 +44,6 @@ clean:
 include $(DEPENDS)
 
 depends:
-	gcc -MM $(SOURCES1) > $(DEPENDS)
-	gcc -MM $(SOURCES2) > $(DEPENDS)
+	$(CC) -MM $(SOURCES1) > $(DEPENDS)
+	$(CC) -MM $(SOURCES2) > $(DEPENDS)
 #	gcc -MM $(SOURCES3) > $(DEPENDS)
