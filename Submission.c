@@ -6,12 +6,14 @@
 * Created By    : Mark Shanklin 
 ***********************************************************/
 
-#include <stdio>
-#include <unistd>
-#include <stdlib>
-#include <ctype>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <ctype.h>
 
-int main (int argc, int * argv[])
+#define MAX_FILE_NAME_LEN   25
+
+int main (int argc, int **argv)
 {
     int command = 0;
     int fileCount = 0;
