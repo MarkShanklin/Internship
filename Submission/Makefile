@@ -2,14 +2,14 @@
 # File Name     : Makefile
 # Purpose       : Compiles the code using gcc.
 # Creation Date : 06-27-2016
-# Last Modified : Wed 06 Jul 2016 10:16:32 AM PDT
+# Last Modified : Wed 06 Jul 2016 12:17:17 PM PDT
 # Created By    : Mark Shanklin 
 ###########################################################
 
-CC = gcc
-CFLAGS = -g -Wall -std='gnu11' 
+CC = gcc -g
+CFLAGS = -Wall -std='gnu11' 
 PROG = Sub.prog
-SOURCES = $(shell echo *.h)
+SOURCES = $(shell echo *.c)
 DEPS := $(shell echo *.h)
 OBJECTS = $(SOURCES:.c=.o)
 DEPENDS = depends.mk
