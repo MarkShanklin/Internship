@@ -4,12 +4,14 @@
 *          watch a directory and send a
 *          message to a (pipe?)
 * Creation Date: 06-21-2016
-* Last Modified: Mon 27 Jun 2016 02:23:22 PM PDT
+* Last Modified: Tue 12 Jul 2016 09:45:13 AM PDT
 * Created By: Jacob Shanklin
 *******************************************/
 #include <sys/inotify.h>
 #include <limits.h>
 #include "fileObs.h"
+#include <sys/socket.h>
+    
 static void
 displayInotifyEvent(struct inotify_event *i)
 {
@@ -19,7 +21,7 @@ displayInotifyEvent(struct inotify_event *i)
         sockfd = socket(AF_UNIX, SOCK_DGRAM, 0);
         if(sockfd != -1)
         {
-            fprintf(sockfd, "%s", i->name); //print the filename to the UDP Sock
+            //fprintf(sockfd, "%s", i->name); //print the filename to the UDP Sock
             //close UDP Socket
         }
     }
