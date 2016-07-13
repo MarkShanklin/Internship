@@ -2,7 +2,7 @@
 * File Name     : Submission.c
 * Purpose       : Submission system for the Grading Environment
 * Creation Date : 06-30-2016
-* Last Modified : Thu 07 Jul 2016 01:00:45 PM PDT
+* Last Modified : Wed 13 Jul 2016 11:51:04 AM PDT
 * Created By    : Mark Shanklin 
 ***********************************************************/
 
@@ -115,6 +115,8 @@ int main (int argc, char *argv[])
     printf("%s\n", Lab);
     printf("%s\n", User);
     printf("%s\n", FileName);
-
+    
+    int fd = open(FileName, O_CREAT, O_WRONLY);
+    
     return (EXIT_SUCCESS);
 }
