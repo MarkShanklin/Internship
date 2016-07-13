@@ -1,31 +1,26 @@
-############################################################
-# File Name     : Makefile
-# Purpose       : Compiles the code using gcc.
-# Creation Date : 06-27-2016
-# Last Modified : Wed 06 Jul 2016 10:16:32 AM PDT
-# Created By    : Mark Shanklin 
-###########################################################
+# Makefile to build all programs in all subdirectories
+#
+# DIRS is a list of all subdirectories containing makefiles
+# (The library directory is first so that the library gets built first)
+#
 
-CC = gcc
-CFLAGS = -g -Wall -std='gnu11' 
-PROG = Sub.prog
-SOURCES = $(shell echo *.h)
-DEPS := $(shell echo *.h)
-OBJECTS = $(SOURCES:.c=.o)
-DEPENDS = depends.mk
-$(shell touch ${DEPENDS})
+DIRS = 	lib \
+		fileObserver \
+		Submission
+# The "namespaces" directory is deliberately excluded from the above
+# list because much of the code requires a fairly recent kernel and
+# userspace to build. Nevertheless, there is a Makefile in that directory.
 
-all: depends $(PROG)
 
-$(PROG): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $^
+BUILD_DIRS = ${DIRS} ${CDIRS}
 
-.PHONY: clean
+# Dummy targets for building and clobbering everything in all subdirectories
 
-clean:
-	rm -f $(PROG) *.o $(DEPENDS)
+all: 	
+	@ for dir in ${BUILD_DIRS}; do (cd $${dir}; ${MAKE}) ; done
 
-include $(DEPENDS)
+allgen: 
+	@ for dir in ${BUILD_DIRS}; do (cd $${dir}; ${MAKE} allgen) ; done
 
-depends:
-	$(CC) -MM $(SOURCES) > $(DEPENDS)
+clean: 
+	@ for dir in ${BUILD_DIRS}; do (cd $${dir}; ${MAKE} clean) ; done

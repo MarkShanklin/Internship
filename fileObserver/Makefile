@@ -2,7 +2,7 @@ include ../Makefile.inc
 
 
 
-EXE = Submission
+EXE = fileObs
 
 all : ${EXE}
 

@@ -4,12 +4,13 @@
 *          watch a directory and send a
 *          message to a (pipe?)
 * Creation Date: 06-21-2016
-* Last Modified: Tue 12 Jul 2016 09:45:13 AM PDT
+* Last Modified: Wed 13 Jul 2016 12:16:50 PM PDT
 * Created By: Jacob Shanklin
 *******************************************/
 #include <sys/inotify.h>
 #include <limits.h>
-#include "fileObs.h"
+//#include "fileObs.h"
+#include "../TLPI/tlpi_hdr.h"
 #include <sys/socket.h>
     
 static void
@@ -30,30 +31,31 @@ displayInotifyEvent(struct inotify_event *i)
 }
 
 #define BUF_LEN (10 * (sizeof(struct inotify_event) + NAME_MAX + 1))
+#define watchDir "../test"
 
 int main(int argc, char *argv[])
 {
-    int inotifyFd, wd, j; //file disc for the new file
+    int inotifyFd, wd; //file disc for the new file
     char buf[BUF_LEN] __attribute__ ((aligned(8)));
     ssize_t numRead;
     char *p;
     struct inotify_event *event;
 
-    if (argc < 2 || strcmp(argv[1], "--help") == 0)
-            usageErr("%s pathname...\n", argv[0]);
+    //if (argc < 2 || strcmp(argv[1], "--help") == 0)
+    //        usageErr("%s pathname...\n", argv[0]);
 
     inotifyFd = inotify_init();
     if (inotifyFd == -1)
         errExit("inotify_init");
 
-    for (j = 1; j < argc; j++) 
-    {
-        wd = inotify_add_watch(inotifyFd, argv[j], IN_ALL_EVENTS);
+    //for (j = 1; j < argc; j++) 
+    //{
+        wd = inotify_add_watch(inotifyFd, watchDir, IN_ALL_EVENTS);
         if (wd == -1)
             errExit("inotify_add_watch");
 
-        printf("Watching %s using wd %5d\n", argv[j], wd);
-    }
+        printf("Watching %s using wd %5d\n", watchDir, wd);
+    //}
 
     for(;;) {
         numRead = read(inotifyFd, buf, BUF_LEN);
