@@ -1,7 +1,5 @@
 include ../Makefile.inc
 
-
-
 EXE = Submission
 
 all : ${EXE}

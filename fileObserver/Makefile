@@ -1,7 +1,5 @@
 include ../Makefile.inc
 
-
-
 EXE = fileObs
 
 all : ${EXE}
