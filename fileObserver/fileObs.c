@@ -10,7 +10,7 @@
 #include <sys/inotify.h>
 #include <limits.h>
 //#include "fileObs.h"
-#include "../TLPI/tlpi_hdr.h"
+#include "../lib/tlpi_hdr.h"
 #include <sys/socket.h>
     
 static void

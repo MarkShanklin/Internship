@@ -1,5 +1,12 @@
 include ../Makefile.inc
 
+include makefile.inc
+
+#required
+CLASS =
+SECTION =
+LAB =
+
 EXE = Submission
 
 all : ${EXE}
