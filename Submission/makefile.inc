@@ -2,10 +2,11 @@ USER := ${LOGNAME}
 
 SUB_TAR_FILE := $(CLASS)+$(SECTION)+$(LAB)+$(USER).tar
 
-SUB_DIR = /home2/jacob.shanklin/git/Internship/test/
+SUB_PROG = /home/grader_dev/src/cp_files
 
 TAR_CREATE:
 	tar -cvf $(SUB_TAR_FILE) *.[ch] [Mm]akefile
 
 sub: TAR_CREATE
-	mv $(SUB_TAR_FILE) $(SUB_DIR)
+	$(SUB_PROG) $(SUB_TAR_FILE)
+	rm -f $(SUB_TAR_FILE)
