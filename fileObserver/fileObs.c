@@ -4,7 +4,7 @@
 *          watch a directory and send a
 *          message to a (pipe?)
 * Creation Date: 06-21-2016
-* Last Modified: Wed 13 Jul 2016 12:16:50 PM PDT
+* Last Modified: Wed 13 Jul 2016 02:32:34 PM PDT
 * Created By: Jacob Shanklin
 *******************************************/
 #include <sys/inotify.h>
@@ -12,19 +12,29 @@
 //#include "fileObs.h"
 #include "../TLPI/tlpi_hdr.h"
 #include <sys/socket.h>
+#include <time.h>
     
 static void
 displayInotifyEvent(struct inotify_event *i)
 {
+    FILE * fp;
     if (i->mask & IN_MOVED_TO && i->len > 0)
     {
+	fp = fopen( "logfile.txt", "a" );
         int sockfd;
+	time_t rawtime;
+	struct tm * timeinfo;
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
         sockfd = socket(AF_UNIX, SOCK_DGRAM, 0);
         if(sockfd != -1)
         {
+            fprintf(fp, "LOG: %s, ENTRY TIME: %s\n", i->name, asctime (timeinfo));
+            fprintf(stderr, "THIS WILL BE A MESSAGE ON A SOCKET. SOCKFD: %d\n", sockfd);
             //fprintf(sockfd, "%s", i->name); //print the filename to the UDP Sock
             //close UDP Socket
         }
+	fclose(fp);
     }
 
 
@@ -41,21 +51,15 @@ int main(int argc, char *argv[])
     char *p;
     struct inotify_event *event;
 
-    //if (argc < 2 || strcmp(argv[1], "--help") == 0)
-    //        usageErr("%s pathname...\n", argv[0]);
-
     inotifyFd = inotify_init();
     if (inotifyFd == -1)
         errExit("inotify_init");
 
-    //for (j = 1; j < argc; j++) 
-    //{
-        wd = inotify_add_watch(inotifyFd, watchDir, IN_ALL_EVENTS);
-        if (wd == -1)
-            errExit("inotify_add_watch");
+    wd = inotify_add_watch(inotifyFd, watchDir, IN_ALL_EVENTS);
+    if (wd == -1)
+        errExit("inotify_add_watch");
 
-        printf("Watching %s using wd %5d\n", watchDir, wd);
-    //}
+    printf("Watching %s using wd %5d\n", watchDir, wd);
 
     for(;;) {
         numRead = read(inotifyFd, buf, BUF_LEN);
@@ -64,9 +68,7 @@ int main(int argc, char *argv[])
 
         if (numRead == -1)
             errExit("read");
-
-        printf("read %ld bytes from inotify fd\n", (long) numRead);
-
+        
         for (p = buf; p < buf + numRead; ) {
             event = (struct inotify_event *) p;
             displayInotifyEvent(event);
