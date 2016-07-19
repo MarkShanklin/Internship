@@ -5,7 +5,7 @@ EXE = fileObs
 all : ${EXE}
 
 clean : 
-	${RM} ${EXE} *.o
+	${RM} ${EXE} *.o *.mk
 
 showall :
 	@ echo ${EXE}
