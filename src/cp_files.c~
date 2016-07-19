@@ -1,0 +1,25 @@
+#include <stdio.h> 
+#include <unistd.h>
+#include <linit/limits.h>
+#include <string.h>
+
+
+int main(int argc, char *argv[])
+{
+  int i;
+  int rfd;
+  int wfd;
+  char wfile_name[PATH_MAX];
+
+  for (i = 0; i < argc; i++) {
+    if ((rdf = open(argv[i], O_RDONLY)) > 0) {
+      memset(wfile_name, 0, PATH_MAX);
+      strncpy(wfile_name, getenv("HOME"));
+      strcat(wfile_name, argv[i]);
+      printf("file %d <%s>\n", wfile_name);
+    }
+    else {
+      // barf
+    }
+  }
+}
