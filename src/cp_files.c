@@ -6,11 +6,13 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <time.h>
+#include <libgen.h>
 
 // You want to replace this with some code that calls
 // struct passwd *getpwuid(uid_t uid);
 #define FILE_DROP_DIR "/home/grader_dev/file_drop"
-
+#define LOG_FILE "/home/grader_dev/file_drop/log_file.txt"
 int main(int argc, char *argv[])
 {
   int i;
@@ -20,8 +22,15 @@ int main(int argc, char *argv[])
   char buf[1000];
   ssize_t num_read;
   ssize_t num_written;
+  FILE *lfp;
+  time_t rawtime;
+  struct tm * timeinfo;
+
+  time ( &rawtime );
+  timeinfo = localtime ( &rawtime );
 
   printf("args %d\n", argc);
+  lfp = fopen(LOG_FILE, "a" );
 
   for (i = 1; i < argc; i++) {
     if ((rfd = open(argv[i], O_RDONLY)) > 0) {
@@ -44,6 +53,7 @@ int main(int argc, char *argv[])
 	  }
 	  else if (0 == num_read) {
 	    printf("  done with %s\n", wfile_name);
+	    fprintf(lfp, "submitted %s @ %s", basename(wfile_name), asctime (timeinfo) );
 	    break;
 	  }
 	  else {
@@ -64,6 +74,6 @@ int main(int argc, char *argv[])
       perror("could not open file to read");
     }
   }
-
+  fclose(lfp);
   return(0);
 }
