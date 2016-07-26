@@ -4,7 +4,7 @@
 *          watch a directory and send a
 *          message to a (pipe?)
 * Creation Date: 06-21-2016
-* Last Modified: Wed 13 Jul 2016 02:32:34 PM PDT
+* Last Modified: Tue 26 Jul 2016 11:21:30 AM PDT
 * Created By: Jacob Shanklin
 *******************************************/
 #include <sys/inotify.h>
@@ -12,27 +12,50 @@
 //#include "fileObs.h"
 #include "../lib/tlpi_hdr.h"
 #include <sys/socket.h>
+#include <sys/types.h>
+#include <string.h>
+#include <sys/un.h>
 #include <time.h>
-    
+#define SOCK_PATH "observer_socket"
+#define MAX_MESSAGE_LENGTH 256
 static void
 displayInotifyEvent(struct inotify_event *i)
 {
     FILE * fp;
+    fprintf(stderr, "Caught: %d, need: %d\n", i->mask, IN_MOVED_TO);
     if (i->mask & IN_MOVED_TO && i->len > 0)
     {
-	fp = fopen( "logfile.txt", "a" );
+	    fp = fopen( "logfile.txt", "a" );
         int sockfd;
-	time_t rawtime;
-	struct tm * timeinfo;
-	time ( &rawtime );
-	timeinfo = localtime ( &rawtime );
-        sockfd = socket(AF_UNIX, SOCK_DGRAM, 0);
+	    time_t rawtime;
+        struct sockaddr_un sockAddr;
+        int sockLen;
+	    struct tm * timeinfo;
+        int wlen;
+        char message[MAX_MESSAGE_LENGTH];
+	    memset(message, 0, sizeof(message));
+        time ( &rawtime );
+	    timeinfo = localtime ( &rawtime );
+        sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
+        fprintf(stderr, "Socket Open\n");
         if(sockfd != -1)
         {
+            memset(&sockAddr, 0, sizeof(sockAddr));
+            sockAddr.sun_family = AF_UNIX;
+            strcpy(sockAddr.sun_path, SOCK_PATH);
+            sockLen = strlen(sockAddr.sun_path) + sizeof(sockAddr.sun_family);
+            if (connect(sockfd, (struct sockaddr *)&sockAddr, sockLen) == -1) {
+                perror("Could not connect");
+                exit(EXIT_FAILURE);
+            }
+            
             fprintf(fp, "LOG: %s, ENTRY TIME: %s\n", i->name, asctime (timeinfo));
-            fprintf(stderr, "THIS WILL BE A MESSAGE ON A SOCKET. SOCKFD: %d\n", sockfd);
-            //fprintf(sockfd, "%s", i->name); //print the filename to the UDP Sock
-            //close UDP Socket
+            //sprintf(sockfd, "THIS WILL BE A MESSAGE ON A SOCKET. SOCKFD: %d\n", sockfd);
+            
+            strncpy(message, i->name, MAX_MESSAGE_LENGTH-1); //print the filename to the UDP Sock
+            wlen = write(sockfd, message, strlen(i->name));
+            fprintf(stderr, ">>%s<<\nBytes written: >>%d<<\nSTRLEN: >>%d<<\n", message, wlen, (int)strlen(message));
+            close(sockfd);
         }
 	fclose(fp);
     }
@@ -63,6 +86,7 @@ int main(int argc, char *argv[])
 
     for(;;) {
         numRead = read(inotifyFd, buf, BUF_LEN);
+        fprintf(stderr, "Read a file event");
         if(numRead == 0)
             fatal("read() from inotify fd return 0!");
 
