@@ -30,6 +30,26 @@ int main(int argc, char *argv[])
   struct passwd *pwuid;
   time ( &rawtime );
   timeinfo = localtime ( &rawtime );
+  i = 0;
+  for(; i < 80; i++)
+  {
+  fprintf(stdout, "*");
+  }
+  fprintf(stdout, "\n\n"); 
+  fprintf(stdout, "       #                            #####\n");                                     
+  fprintf(stdout, "      # #   #    # #####  ####     #     # #####    ##   #####  ###### #####\n");  
+  fprintf(stdout, "     #   #  #    #   #   #    #    #       #    #  #  #  #    # #      #    #\n"); 
+  fprintf(stdout, "    #     # #    #   #   #    #    #  #### #    # #    # #    # #####  #    #\n"); 
+  fprintf(stdout, "    ####### #    #   #   #    #    #     # #####  ###### #    # #      #####\n");  
+  fprintf(stdout, "    #     # #    #   #   #    #    #     # #   #  #    # #    # #      #   #\n");  
+  fprintf(stdout, "    #     #  ####    #    ####      #####  #    # #    # #####  ###### #    #\n");
+  fprintf(stdout, "\n\n");
+  i = 0;
+  for(; i < 80; i++)
+  {
+  fprintf(stdout, "*");
+  }
+  fprintf(stdout, "\n\n");
 
   pwuid = getpwuid(geteuid());
   memset(wfile_drop_dir, 0, PATH_MAX);
@@ -87,5 +107,5 @@ int main(int argc, char *argv[])
     }
   }
   fclose(lfp);
-  return(0);
+  return(EXIT_SUCCESS);
 }
