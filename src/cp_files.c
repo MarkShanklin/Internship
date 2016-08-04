@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
   struct passwd *pwuid;
   time ( &rawtime );
   timeinfo = localtime ( &rawtime );
+  fprintf(stdout, "\n");
   i = 0;
   for(; i < 80; i++)
   {
@@ -70,11 +71,15 @@ int main(int argc, char *argv[])
       strncpy(wfile_name, wfile_drop_dir, PATH_MAX);
       strncat(wfile_name, "/", 100);
       strncat(wfile_name, argv[i], 100);
-      printf("file %d <%s>\n", i, wfile_name);
+      printf("File %d <%s>\n", i, wfile_name);
       if ((wfd = open(wfile_name, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR)) > 0) {
-	printf("  beginning %s\n", wfile_name);
+	printf("  Beginning %s\n", wfile_name);
+        printf("  Copying File: ");
 	for ( ; ; ) {
 	  num_read = read(rfd, buf, sizeof(buf));
+	  printf("****");
+	  sleep(1);
+	  fflush(stdout);
 	  if (num_read > 0) {
 	    num_written = write(wfd, buf, num_read);
 	    if (num_read != num_written) {
@@ -84,8 +89,8 @@ int main(int argc, char *argv[])
 	    }
 	  }
 	  else if (0 == num_read) {
-	    printf("  done with %s\n", wfile_name);
-	    fprintf(lfp, "submitted %s @ %s", basename(wfile_name), asctime (timeinfo) );
+	    printf(" Complete\n  Done with %s\n", wfile_name);
+	    fprintf(lfp, "Submitted %s @ %s", basename(wfile_name), asctime (timeinfo) );
 	    break;
 	  }
 	  else {
