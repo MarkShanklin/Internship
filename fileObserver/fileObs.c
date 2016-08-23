@@ -4,7 +4,7 @@
 *          watch a directory and send a
 *          message to a (pipe?)
 * Creation Date: 06-21-2016
-* Last Modified: Tue 26 Jul 2016 11:21:30 AM PDT
+* Last Modified: Mon 01 Aug 2016 10:52:12 AM PDT
 * Created By: Jacob Shanklin
 *******************************************/
 #include <sys/inotify.h>
@@ -50,7 +50,6 @@ displayInotifyEvent(struct inotify_event *i)
             }
             
             fprintf(fp, "LOG: %s, ENTRY TIME: %s\n", i->name, asctime (timeinfo));
-            //sprintf(sockfd, "THIS WILL BE A MESSAGE ON A SOCKET. SOCKFD: %d\n", sockfd);
             
             strncpy(message, i->name, MAX_MESSAGE_LENGTH-1); //print the filename to the UDP Sock
             wlen = write(sockfd, message, strlen(i->name));

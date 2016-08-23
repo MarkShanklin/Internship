@@ -1,0 +1,26 @@
+
+Internship project completion timeline:
+
+FileObserver.prog - Friday July 15
+Submission.prog - Friday July 15
+FileLogging - Friday July 22
+TestingController.prog - Friday August 5
+
+Overall Project Completion - August 18
+
+
+
+
+
+
+Updated Timlines:
+
+FileObserver.prog - Complete July 24
+Submissions.prog - Complete July 24
+FileLogging - Complete July 24
+
+TestingController.prog - August 18
+
+BugTesting - August 18 - August 31
+
+Extra Features - Oct 30
