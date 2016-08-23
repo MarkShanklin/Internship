@@ -93,40 +93,32 @@ int main(int argc, char *argv[])
         perror("stat");
         exit(EXIT_FAILURE);
     }
-
-   printf("File type:                ");
-
-   switch (rsb.st_mode & S_IFMT) {
-    case S_IFBLK:  printf("block device\n");            break;
-    case S_IFCHR:  printf("character device\n");        break;
-    case S_IFDIR:  printf("directory\n");               break;
-    case S_IFIFO:  printf("FIFO/pipe\n");               break;
-    case S_IFLNK:  printf("symlink\n");                 break;
-    case S_IFREG:  printf("regular file\n");            break;
-    case S_IFSOCK: printf("socket\n");                  break;
-    default:       printf("unknown?\n");                break;
+  if(verbose)
+  {
+    printf("File type:                ");
+    switch (rsb.st_mode & S_IFMT) 
+    {
+      case S_IFBLK:  printf("block device\n");            break;
+      case S_IFCHR:  printf("character device\n");        break;
+      case S_IFDIR:  printf("directory\n");               break;
+      case S_IFIFO:  printf("FIFO/pipe\n");               break;
+      case S_IFLNK:  printf("symlink\n");                 break;
+      case S_IFREG:  printf("regular file\n");            break;
+      case S_IFSOCK: printf("socket\n");                  break;
+      default:       printf("unknown?\n");                break;
     }
 
-   printf("I-node number:            %ld\n", (long) rsb.st_ino);
-
-   printf("Mode:                     %lo (octal)\n",
-            (unsigned long) rsb.st_mode);
-
-   printf("Link count:               %ld\n", (long) rsb.st_nlink);
-    printf("Ownership:                UID=%ld   GID=%ld\n",
-            (long) rsb.st_uid, (long) rsb.st_gid);
-
-   printf("Preferred I/O block size: %ld bytes\n",
-            (long) rsb.st_blksize);
-    printf("File size:                %lld bytes\n",
-            (long long) rsb.st_size);
-    printf("Blocks allocated:         %lld\n",
-            (long long) rsb.st_blocks);
-
-   printf("Last status change:       %s", ctime(&rsb.st_ctime));
+    printf("I-node number:            %ld\n", (long) rsb.st_ino);
+    printf("Mode:                     %lo (octal)\n", (unsigned long) rsb.st_mode);
+    printf("Link count:               %ld\n", (long) rsb.st_nlink);
+    printf("Ownership:                UID=%ld   GID=%ld\n", (long) rsb.st_uid, (long) rsb.st_gid);
+    printf("Preferred I/O block size: %ld bytes\n", (long) rsb.st_blksize);
+    printf("File size:                %lld bytes\n", (long long) rsb.st_size);
+    printf("Blocks allocated:         %lld\n", (long long) rsb.st_blocks);
+    printf("Last status change:       %s", ctime(&rsb.st_ctime));
     printf("Last file access:         %s", ctime(&rsb.st_atime));
     printf("Last file modification:   %s", ctime(&rsb.st_mtime));
-
+  }
       if(verbose)
       {
       	printf("File %d <%s>\n", i, wfile_name);
@@ -153,6 +145,12 @@ int main(int argc, char *argv[])
 	  else if (0 == num_read) {
 	    printf(" Complete\n  Done with %s\n", wfile_name);
 	    fprintf(lfp, "Submitted %s @ %s", basename(wfile_name), asctime (timeinfo) );
+	    fprintf(stdout, "\n");
+	    i = 0;  
+	    for(; i < 80; i++)
+  	    {
+  	        fprintf(stdout, "*");
+  	    }
 	    break;
 	  }
 	  else {
@@ -167,41 +165,34 @@ int main(int argc, char *argv[])
         perror("stat");
         exit(EXIT_FAILURE);
     }
+  if(verbose)
+  {
+    printf("File type:                ");
 
-   printf("File type:                ");
-
-   switch (wsb.st_mode & S_IFMT) {
-    case S_IFBLK:  printf("block device\n");            break;
-    case S_IFCHR:  printf("character device\n");        break;
-    case S_IFDIR:  printf("directory\n");               break;
-    case S_IFIFO:  printf("FIFO/pipe\n");               break;
-    case S_IFLNK:  printf("symlink\n");                 break;
-    case S_IFREG:  printf("regular file\n");            break;
-    case S_IFSOCK: printf("socket\n");                  break;
-    default:       printf("unknown?\n");                break;
+    switch (wsb.st_mode & S_IFMT) 
+    {
+      case S_IFBLK:  printf("block device\n");            break;
+      case S_IFCHR:  printf("character device\n");        break;
+      case S_IFDIR:  printf("directory\n");               break;
+      case S_IFIFO:  printf("FIFO/pipe\n");               break;
+      case S_IFLNK:  printf("symlink\n");                 break;
+      case S_IFREG:  printf("regular file\n");            break;
+      case S_IFSOCK: printf("socket\n");                  break;
+      default:       printf("unknown?\n");                break;
     }
-
-   printf("I-node number:            %ld\n", (long) wsb.st_ino);
-
-   printf("Mode:                     %lo (octal)\n",
-            (unsigned long) wsb.st_mode);
-
-   printf("Link count:               %ld\n", (long) wsb.st_nlink);
-    printf("Ownership:                UID=%ld   GID=%ld\n",
-            (long) wsb.st_uid, (long) wsb.st_gid);
-
-   printf("Preferred I/O block size: %ld bytes\n",
-            (long) wsb.st_blksize);
-    printf("File size:                %lld bytes\n",
-            (long long) wsb.st_size);
-    printf("Blocks allocated:         %lld\n",
-            (long long) wsb.st_blocks);
-
-   printf("Last status change:       %s", ctime(&wsb.st_ctime));
+    printf("I-node number:            %ld\n", (long) wsb.st_ino);
+    printf("Mode:                     %lo (octal)\n", (unsigned long) wsb.st_mode);
+    printf("Link count:               %ld\n", (long) wsb.st_nlink);
+    printf("Ownership:                UID=%ld   GID=%ld\n", (long) wsb.st_uid, (long) wsb.st_gid);
+    printf("Preferred I/O block size: %ld bytes\n", (long) wsb.st_blksize);
+    printf("File size:                %lld bytes\n", (long long) wsb.st_size);
+    printf("Blocks allocated:         %lld\n", (long long) wsb.st_blocks);
+    printf("Last status change:       %s", ctime(&wsb.st_ctime));
     printf("Last file access:         %s", ctime(&wsb.st_atime));
     printf("Last file modification:   %s", ctime(&wsb.st_mtime));
-	close(wfd);
-      }
+  }	
+  close(wfd);
+  }
       else {
 	printf("***ERROR could not open <%s>\n", wfile_name);
 	perror("could not open file to write");
