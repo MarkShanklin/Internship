@@ -4,7 +4,7 @@
 *          watch a directory and send a
 *          message to a (pipe?)
 * Creation Date: 06-21-2016
-* Last Modified: Mon 01 Aug 2016 10:52:12 AM PDT
+* Last Modified: Wed 07 Sep 2016 11:07:22 AM PDT
 * Created By: Jacob Shanklin
 *******************************************/
 #include <sys/inotify.h>
@@ -25,7 +25,19 @@ displayInotifyEvent(struct inotify_event *i)
     fprintf(stderr, "Caught: %d, need: %d\n", i->mask, IN_MOVED_TO);
     if (i->mask & IN_MOVED_TO && i->len > 0)
     {
-	    fp = fopen( "logfile.txt", "a" );
+	    //move and extract file to new location
+        char studentName[MAX_STUDENT_NAME_LENGTH];
+        char studentLab[2];
+        char studentClass[7];
+        char studentSection[8];
+
+        studentClass = strtok(i->name, "+");
+        studentSection = strtok(i->name, "+");
+        studentLab = strtok(i->name, "+");
+        studentName = strtok(i->name, ".tar");
+        //Send required information to system TEST
+        
+        fp = fopen( "logfile.txt", "a" );
         int sockfd;
 	    time_t rawtime;
         struct sockaddr_un sockAddr;
