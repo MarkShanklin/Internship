@@ -81,6 +81,65 @@ int main(int argc, char *argv[])
     printf("args %d\n", argc);
   }
   lfp = fopen(wlog_file, "a" );
+//change this over to be able to accept command line arguements.
+   while((command = getopt(argc, argv, "a:l:f:v:h")) != -1) 
+    {   
+        switch(command)
+        {   
+            case 'a':
+                about = true;
+                optind--;
+                for(i = optind; i < argc && (*argv[i] != '-'); i++)
+                {   
+                    if(strlen(basename(argv[i])) < OITAR_MAX_FILE_NAME_LEN)
+                    {   
+                        filenames = (char**)realloc(filenames, (sizeof(char*) * (fileCount + 1)));
+                        filenames[fileCount] = strdup(argv[i]);
+                        fileCount++;
+                    }   
+                }   
+                break;
+            case 'l':
+                lisence = true;
+                if(about == false)
+                {   
+                    optind--;
+                    for(i = optind; i < argc && (*argv[i] != '-'); i++)
+                    {   
+                        if(strlen(basename(argv[i])) < OITAR_MAX_FILE_NAME_LEN)
+                        {   
+                            filenames = (char**)realloc(filenames, (sizeof(char*) * (fileCount + 1)));
+                            filenames[fileCount] = strdup(argv[i]);
+                            fileCount++;
+                        }   
+                    }   
+                }   
+                break;
+            case 'f':
+                fastLoad = true;
+                    optind--;
+                    for(i = optind; i < argc && (*argv[i] != '-'); i++)
+                    {   
+                        if(strlen(basename(argv[i])) < OITAR_MAX_FILE_NAME_LEN)
+                        {   
+                            filenames = (char**)realloc(filenames, (sizeof(char*) * (fileCount + 1)));
+                            filenames[fileCount] = strdup(argv[i]);
+                            fileCount++;
+                        }   
+                    }   
+		break;
+	    case 'v':
+		verbose = true;
+		break;
+	    case 'h':
+		help = true;
+		break;
+	    case '?':
+		break;
+	}
+    }
+
+
 
   for (i = 1; i < argc; i++) {
     if ((rfd = open(argv[i], O_RDONLY)) > 0) {
