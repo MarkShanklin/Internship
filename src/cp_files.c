@@ -71,51 +71,18 @@ int main(int argc, char *argv[])
     timeinfo = localtime ( &rawtime ); //set the time information based of the raw time of when this program was initialized.
     
     fileCount = 0;
-    while((command = getopt(argc, argv, "a:l:f:v:h")) != -1)
+    while((command = getopt(argc, argv, "alfvh")) != -1)
     {
         switch(command)
         {   
             case 'a':
                 about = true;
-                if (lisence) {
-                    <#statements#>
-                }
-                optind--;
-                for(i = optind; i < argc && (*argv[i] != '-'); i++)
-                {
-                    memset(wfile_name, 0, PATH_MAX);
-                    strncpy(wfile_name, wfile_drop_dir, PATH_MAX);
-                    strncat(wfile_name, "/", 100);
-                    strncat(wfile_name, argv[i], 100);
-                    ++fileCount;
-                }   
                 break;
             case 'l':
                 lisence = true;
-                if(about == false)
-                {   
-                    optind--;
-                    for(i = optind; i < argc && (*argv[i] != '-'); i++)
-                    {   
-                        memset(wfile_name, 0, PATH_MAX);
-                        strncpy(wfile_name, wfile_drop_dir, PATH_MAX);
-                        strncat(wfile_name, "/", 100);
-                        strncat(wfile_name, argv[i], 100);
-                        ++fileCount;
-                    }   
-                }   
                 break;
             case 'f':
                 fastLoad = true;
-                optind--;
-                for(i = optind; i < argc && (*argv[i] != '-'); i++)
-                {
-                    memset(wfile_name, 0, PATH_MAX);
-                    strncpy(wfile_name, wfile_drop_dir, PATH_MAX);
-                    strncat(wfile_name, "/", 100);
-                    strncat(wfile_name, argv[i], 100);
-                    ++fileCount;
-                }
                 break;
             case 'v':
                 verbose = true;
@@ -147,10 +114,14 @@ int main(int argc, char *argv[])
     lfp = fopen(wlog_file, "a" ); //open the log file in append mode.
     
 //this needs to be modified to work with the command line arg stuff.
-    for (i = 1; i < argc; i++)
-    {
-        if ((rfd = open(argv[i], O_RDONLY)) > 0)
+//    for (i = 1; i < argc; i++)
+//    {
+        if ((rfd = open(argv[argc], O_RDONLY)) > 0)
         {
+            memset(wfile_name, 0, PATH_MAX);
+            strncpy(wfile_name, wfile_drop_dir, PATH_MAX);
+            strncat(wfile_name, "/", 100);
+            strncat(wfile_name, argv[argc], 100);
             if (fstat(rfd, &rsb) == -1)
             {
                 perror("stat");
@@ -274,7 +245,7 @@ int main(int argc, char *argv[])
             printf("***ERROR could not open <%s>\n", argv[i]);
             perror("could not open file to read");
         }
-    }
+//    }
     fclose(lfp);
   return(EXIT_SUCCESS);
 }
